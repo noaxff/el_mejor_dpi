@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EL MEJOR DPI PARA TU CELULAR</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label, input, button {
+      display: block;
+      margin: 15px auto;
+      font-size: 18px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input, button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input {
+      background-color: #222;
+      color: #fff;
+    }
+
+    button {
+      background-color: #444;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 16px;
+      color: #aaa;
+    }
+
+    .tiktok a {
+      color: #1DA1F2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .tiktok a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>EL MEJOR DPI PARA TU CELULAR</h1>
+
+    <label for="modelo">¿Qué celular tienes?</label>
+    <input type="text" id="modelo" placeholder="Ej: Poco X6 5G" />
+
+    <label for="resolucion">¿Cuál es tu resolución? (Ej: 2172x1220)</label>
+    <input type="text" id="resolucion" placeholder="Ej: 2172x1220" />
+
+    <button onclick="calcularDPI()">Calcular DPI Ideal</button>
+
+    <div id="resultado"></div>
+
+    <footer>
+      <p>Creado por Noax</p>
+      <p class="tiktok">
+        TikTok: <a href="https://www.tiktok.com/@noax314?is_from_webapp=1&sender_device=pc" target="_blank">@noax_ff</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    function calcularDPI() {
+      const referenciaDPI = 590;
+      const referenciaAncho = 2172;
+      const referenciaAlto = 1220;
+      const referenciaTotal = referenciaAncho * referenciaAlto;
+
+      const modelo = document.getElementById("modelo").value.trim();
+      const resolucion = document.getElementById("resolucion").value.trim();
+      const resultado = document.getElementById("resultado");
+
+      if (modelo === "" || resolucion === "") {
+        resultado.textContent = "Debes escribir qué celular tienes y su resolución.";
+        return;
+      }
+
+      const partes = resolucion.split("x");
+      if (partes.length !== 2) {
+        resultado.textContent = "Por favor escribe la resolución correctamente (Ej: 2172x1220)";
+        return;
+      }
+
+      const ancho = parseInt(partes[0]);
+      const alto = parseInt(partes[1]);
+
+      if (isNaN(ancho) || isNaN(alto)) {
+        resultado.textContent = "La resolución debe ser en números (Ej: 2172x1220)";
+        return;
+      }
+
+      const total = ancho * alto;
+      let nuevoDPI;
+
+      if (total < referenciaTotal) {
+        let diferencia = (referenciaTotal - total) / referenciaTotal;
+        nuevoDPI = referenciaDPI + Math.round(diferencia * 200);
+      } else if (total > referenciaTotal) {
+        let diferencia = (total - referenciaTotal) / referenciaTotal;
+        nuevoDPI = referenciaDPI - Math.round(diferencia * 200);
+      } else {
+        nuevoDPI = referenciaDPI;
+      }
+
+      resultado.textContent = "DPI recomendado: " + nuevoDPI;
+    }
+  </script>
+</body>
+</html>
